@@ -22,6 +22,7 @@ def adding_stanford_nlp_groups_NER_to_stop_words(nlp):
 
     for number in list(range(0, 16)):
         nlp.vocab['@ORGANIZATION' + str(number)].is_stop = True
+        nlp.vocab['@PERSON' + str(number)].is_stop = True
         nlp.vocab['@CAPS' + str(number)].is_stop = True
         nlp.vocab['@LOCATION' + str(number)].is_stop = True
         nlp.vocab['@DATE' + str(number)].is_stop = True
@@ -43,6 +44,7 @@ def removing_stanford_nlp_groups_NER_from_stop_words(nlp):
 
     for number in list(range(0, 16)):
         nlp.vocab['@ORGANIZATION' + str(number)].is_stop = False
+        nlp.vocab['@PERSON' + str(number)].is_stop = False
         nlp.vocab['@CAPS' + str(number)].is_stop = False
         nlp.vocab['@LOCATION' + str(number)].is_stop = False
         nlp.vocab['@DATE' + str(number)].is_stop = False
