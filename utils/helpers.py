@@ -80,7 +80,7 @@ def lemmatized_sentence_corpus(filename, codecs, nlp):
     lemmatize the text, and yield sentences
     """
     
-    for parsed_review in nlp.pipe(line_review(filename, codecs), batch_size=10000, n_threads=4):
+    for parsed_review in nlp.pipe(line_review(filename, codecs), batch_size=100, n_threads=4):
         
         for sent in parsed_review.sents:
             yield ' '.join([token.lemma_ for token in sent if not punct_space_stop(token)])
