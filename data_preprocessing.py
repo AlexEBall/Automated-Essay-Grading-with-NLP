@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from utils.helpers import uniqueColumns, printEssaySetStats
-from data.Essay_Dicts.essay_dictionaries import essay_prompts, essay_gradeLevels, essay_sourceDependent
+from data.intermediate.essay_eicts.essay_dictionaries import essay_prompts, essay_gradeLevels, essay_sourceDependent
 
 training_essay_set = pd.read_excel('./data/training_set_rel3.xlsx')
 

@@ -2,19 +2,9 @@ import os
 import codecs
 import spacy
 import itertools as it
-
 import pandas as pd
-
 from gensim.models import Phrases
 from gensim.models.word2vec import LineSentence
-# from gensim.corpora import Dictionary, MmCorpus
-# from gensim.models.ldamulticore import LdaMulticore
-#
-# import pyLDAvis
-# import pyLDAvis.gensim
-# import warnings
-# import pickle
-
 
 from utils.helpers import adding_stanford_nlp_groups_NER_to_stop_words, removing_stanford_nlp_groups_NER_from_stop_words, punct_space_stop, line_review, lemmatized_sentence_corpus
 nlp = spacy.load('en_core_web_md')
@@ -109,7 +99,7 @@ else:
 
 # ----------- ADD OR REMOVE STOP WORDS ------------ #
 # removing_stanford_nlp_groups_NER_from_stop_words(nlp)
-adding_stanford_nlp_groups_NER_to_stop_words(nlp)
+adding_stanford_nlp_groups_NER_to_stop_words()
 
 
 # ----------- LOOKING AT UNIGRAMS ------------ #
@@ -126,9 +116,9 @@ if 0 == 1:
 
 unigram_sentences = LineSentence(unigram_sentences_filepath)
 
-for unigram_sentence in it.islice(unigram_sentences, 19, 42):
-    print(' '.join(unigram_sentence))
-    print('')
+# for unigram_sentence in it.islice(unigram_sentences, 19, 42):
+#     print(' '.join(unigram_sentence))
+#     print('')
 
 # ----------- LOOKING AT BIGRAMS ------------ #
 bigram_model_filepath = os.path.join(intermediate_directory, 'bigram_model_all')
@@ -158,9 +148,9 @@ if 0 == 1:
 
 bigram_sentences = LineSentence(bigram_sentences_filepath)
 
-for bigram_sentence in it.islice(bigram_sentences, 19, 42):
-    print(' '.join(bigram_sentence))
-    print('')
+# for bigram_sentence in it.islice(bigram_sentences, 19, 42):
+#     print(' '.join(bigram_sentence))
+#     print('')
 
 # ----------- LOOKING AT TRIGRAMS ------------ #
 trigram_model_filepath = os.path.join(intermediate_directory, 'trigram_model_all')
@@ -188,11 +178,9 @@ if 0 == 1:
 
 trigram_sentences = LineSentence(trigram_sentences_filepath)
 
-for trigram_sentence in it.islice(trigram_sentences, 205, 245):
-    print(' '.join(trigram_sentence))
-    print('')
-
-
+# for trigram_sentence in it.islice(trigram_sentences, 205, 245):
+#     print(' '.join(trigram_sentence))
+#     print('')
 
 # ----------- RUN THE TRIGRAMS PHRASE MODEL ON ALL ESSAYS ------------ #
 trigram_essays_all_filepath = os.path.join(intermediate_directory, 'trigram_essays_all.txt')
@@ -203,7 +191,7 @@ if 0 == 1:
 
     with codecs.open(trigram_essays_all_filepath, 'w', encoding='utf_8') as f:
 
-        for parsed_essay in nlp.pipe(line_review(essays_set1_all_filepath, codecs), batch_size=100, n_threads=4):
+        for parsed_essay in nlp.pipe(line_review(essays_set1_all_filepath), batch_size=100, n_threads=4):
             # lemmatize the text, removing punctuation and whitespace
             unigram_essays = [token.lemma_ for token in parsed_essay if not punct_space_stop(token)]
 
@@ -215,13 +203,13 @@ if 0 == 1:
             trigram_essays = ' '.join(trigram_essays)
             f.write(trigram_essays + '\n')
 
-print('Original:' + '\n')
+# print('Original:' + '\n')
 
-for essay in it.islice(line_review(essays_set1_all_filepath, codecs), 301, 302):
-    print(essay)
+# for essay in it.islice(line_review(essays_set1_all_filepath), 301, 302):
+#     print(essay)
 
-print('----' + '\n')
-print('Transformed:' + '\n')
+# print('----' + '\n')
+# print('Transformed:' + '\n')
 
 with codecs.open(trigram_essays_all_filepath, encoding='utf_8') as f:
     for essay in it.islice(f, 301, 302):

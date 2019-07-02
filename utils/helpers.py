@@ -8,6 +8,14 @@ from gensim.corpora import Dictionary, MmCorpus
 from gensim.models.ldamulticore import LdaMulticore
 from gensim.models import Word2Vec
 
+nlp = spacy.load('en_core_web_md')
+
+intermediate_directory = os.path.join('../data/intermediate')
+lda_model_filepath = os.path.join(intermediate_directory, 'lda_model_all')
+
+# load the finished LDA model from disk
+lda = LdaMulticore.load(lda_model_filepath)
+
 def uniqueColumns(df):
     """  
     pretty print unique columns   
@@ -24,7 +32,7 @@ def printEssaySetStats(df):
     print(df.isnull().sum(axis=0))
     print('\n')
 
-def adding_stanford_nlp_groups_NER_to_stop_words(nlp):
+def adding_stanford_nlp_groups_NER_to_stop_words():
     """
     helper funciton to add Stanford NLP Group NERs to spaCy stop words
     range of 0 - 15
@@ -46,7 +54,7 @@ def adding_stanford_nlp_groups_NER_to_stop_words(nlp):
         nlp.vocab['@CITY' + str(number)].is_stop = True
         nlp.vocab['@STATE' + str(number)].is_stop = True
 
-def removing_stanford_nlp_groups_NER_from_stop_words(nlp):
+def removing_stanford_nlp_groups_NER_from_stop_words():
     """
     helper funciton to remove Stanford NLP Group NERs from spaCy stop words
     range of 0 - 15
@@ -76,7 +84,7 @@ def punct_space_stop(token):
     
     return token.is_punct or token.is_space or token.is_stop
 
-def line_review(filename, codecs):
+def line_review(filename):
     """
     generator function to read in reviews from the file
     and un-escape the original line breaks in the text
@@ -86,13 +94,13 @@ def line_review(filename, codecs):
         for review in f:
             yield review.replace('\\n', '\n')
             
-def lemmatized_sentence_corpus(filename, codecs, nlp):
+def lemmatized_sentence_corpus(filename,):
     """
     generator function to use spaCy to parse reviews,
     lemmatize the text, and yield sentences
     """
     
-    for parsed_review in nlp.pipe(line_review(filename, codecs), batch_size=100, n_threads=4):
+    for parsed_review in nlp.pipe(line_review(filename), batch_size=100, n_threads=4):
         
         for sent in parsed_review.sents:
             yield ' '.join([token.lemma_ for token in sent if not punct_space_stop(token)])
@@ -125,7 +133,7 @@ def get_sample_essay(essay_number):
     from the reviews file and return it
     """
 
-    return list(it.islice(line_review(essay_set1_txt_filepath, codecs), essay_number, essay_number+1))[0]
+    return list(it.islice(line_review(essay_set1_txt_filepath), essay_number, essay_number+1))[0]
 
 
 def lda_description(essay_text, min_topic_freq=0.05):

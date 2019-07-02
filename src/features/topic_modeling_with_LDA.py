@@ -70,11 +70,11 @@ lda = LdaMulticore.load(lda_model_filepath)
 
 explore_topic(topic_number=0)
 
-topic_names = {0: 'reasons to spend time online',
-               1: 'spend time online kids play games',
-               2: 'internet helps to learn about the world',
-               3: 'want to find/learn but could be bad',
-               4: 'internet is a tool to find and look'}
+topic_names = {0: 'computers are useful for looking at websites for school',
+               1: 'computers are useful to spend time online playing games',
+               2: 'computers help kids learn about the world',
+               3: 'computers are useful to look for information',
+               4: 'computers are useful to access information at school'}
 
 topic_names_filepath = os.path.join(intermediate_directory, 'topic_names.pkl')
 
