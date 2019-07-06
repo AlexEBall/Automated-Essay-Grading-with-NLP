@@ -3,7 +3,7 @@ import numpy as np
 from utils.helpers import uniqueColumns, printEssaySetStats
 from data.intermediate.essay_eicts.essay_dictionaries import essay_prompts, essay_gradeLevels, essay_sourceDependent
 
-training_essay_set = pd.read_excel('./data/training_set_rel3.xlsx')
+training_essay_set = pd.read_excel('../../data/raw/training_set_rel3.xlsx')
 
 print('Total number of esseays in the dataset: {}'.format(len(training_essay_set)))
 
@@ -62,4 +62,4 @@ training_essay_set = pd.concat([training_essay_set, gradeDF], axis=1)
 training_essay_set.drop(['grade_level', 7, 8, 10], axis=1, inplace=True)
 
 # save dataframe to csv
-training_essay_set.to_csv('./data/prepped_essays_df.csv', index=False)
+training_essay_set.to_csv('../../data/intermediate/prepped_essays_df.csv', index=False)
