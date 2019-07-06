@@ -171,6 +171,36 @@ def lda_description(essay_text, min_topic_freq=0.05):
         # print the most highly related topic names and frequencies
         print('{:25} {}'.format(topic_names[topic_number], round(freq, 3)))
 
+def lda_description_for_building(essay_text, min_topic_freq=0.05):
+        
+    # parse the essay text with spaCy
+    parsed_essay = nlp(essay_text)
+
+    # lemmatize the text and remove punctuation and whitespace
+    unigram_essay = [token.lemma_ for token in parsed_essay
+                     if not punct_space_stop(token)]
+
+    # apply the first-order and secord-order phrase models
+    bigram_essay = bigram_model[unigram_essay]
+    trigram_essay = trigram_model[bigram_essay]
+
+    # create a bag-of-words representation
+    essay_bow = trigram_dictionary.doc2bow(trigram_essay)
+
+    # create an LDA representation
+    essay_lda = lda[essay_bow]
+
+    # sort with the most highly related topics first
+    essay_lda = sorted(essay_lda)
+
+    for topic_number, freq in essay_lda:
+
+        topics.append(topic_names[topic_number])
+        freqs.append(round(freq, 3))
+        
+    # return topic and fre
+    return list(zip(topics, freqs))
+
 def get_related_terms(token, topn=5):
     """
     look up the topn most similar terms to token
@@ -180,3 +210,26 @@ def get_related_terms(token, topn=5):
     for word, similarity in essay2vec_model.wv.most_similar(positive=[token], topn=topn):
 
         print('{:20} {}'.format(word, round(similarity, 3)))
+
+def create_DF_from_tuple(tuple):
+        
+    return pd.DataFrame({k:v for k,*v in tuple})
+
+# This function is a bit inefficient will try to refactor
+def process_topic_and_score_df(topic_names):
+    
+    processed_df = pd.DataFrame(columns=['essay_id', 'essay_set', 'essay', 'rater1_domain1', 'rater2_domain1',
+       'domain1_score', 'prompt', 'has_source_material', 'grade_7', 'grade_8',
+       'grade_10', 'bad_if_kids_spend_too_much_time',
+       'doesnt_have_the_negative_exercise_effect', 'games_and_information',
+       'looking_at_websites_for_info', 'spend_time_looking_on_websites'])
+    for n in range(len(essays)):
+        tuple = lda_description_for_building(get_sample_essay(n))
+        topic_scores = create_DF_from_tuple(tuple)
+        processed_topic_scores = pd.concat([topic_scores, topic_names], sort=True).drop_duplicates().reset_index(drop=True).fillna(0)
+        indexNamesArr = processed_topic_scores.index.values
+        indexNamesArr[0] = n
+        merged_dfs = pd.concat([essays.loc[[n]], processed_topic_scores], axis=1, sort=False)
+        processed_df = processed_df.append(merged_dfs)
+
+    return processed_df
