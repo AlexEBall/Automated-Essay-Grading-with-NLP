@@ -2,6 +2,7 @@ import os
 import codecs
 import spacy
 import itertools as it
+import pandas as pd
 from gensim.models import Phrases
 from gensim.models.word2vec import LineSentence
 from gensim.corpora import Dictionary, MmCorpus
@@ -193,6 +194,8 @@ def lda_description_for_building(essay_text, min_topic_freq=0.05):
     # sort with the most highly related topics first
     essay_lda = sorted(essay_lda)
 
+    topics = []
+    freqs = []
     for topic_number, freq in essay_lda:
 
         topics.append(topic_names[topic_number])

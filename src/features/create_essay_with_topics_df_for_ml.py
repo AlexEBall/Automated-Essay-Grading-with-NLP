@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from utils.helpers import lda_description_for_building, get_sample_essay, create_DF_from_tuple
+from utils.helpers import lda_description_for_building, get_sample_essay, create_DF_from_tuple, process_topic_and_score_df
 
 # Topic names from LDA analysis
 # TODO: Refactor out into it's own space
