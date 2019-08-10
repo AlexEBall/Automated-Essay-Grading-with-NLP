@@ -64,14 +64,14 @@ def get_top_n_words(corpus, stopwords=False, n=None):
     return words_freq[:n]
 
 # Generate a plotly histogram of unigrams with stopwords
-common_words = get_top_n_words(essays1.essay, 20)
+common_words = get_top_n_words(essays1.essay, n=20)
     
 df1 = pd.DataFrame(common_words, columns = ['essay' , 'count'])
 df1.groupby('essay').sum()['count'].sort_values(ascending=False).iplot(
     kind='bar', yTitle='Count', linecolor='black', title='Top 20 words in essays before removing stop words')
 
 # Generate a plotly histogram of unigrams without stopwords
-common_words = get_top_n_words(essays1['essay'], stopwords=True, 20)
+common_words = get_top_n_words(essays1['essay'], stopwords=True, n=20)
     
 df2 = pd.DataFrame(common_words, columns = ['essay' , 'count'])
 df2.groupby('essay').sum()['count'].sort_values(ascending=False).iplot(
@@ -91,14 +91,14 @@ def get_top_n_bigram(corpus, stopwords=False, n=None):
     return words_freq[:n]
 
 # Generate a plotly histogram of bigrams with stopwords
-common_words = get_top_n_bigram(essays1['essay'], 20)
+common_words = get_top_n_bigram(essays1['essay'], n=20)
     
 df3 = pd.DataFrame(common_words, columns = ['essay' , 'count'])
 df3.groupby('essay').sum()['count'].sort_values(ascending=False).iplot(
     kind='bar', yTitle='Count', linecolor='black', title='Top 20 bigrams in essays before removing stop words')
 
 # Generate a plotly histogram of bigrams without stopwords
-common_words = get_top_n_bigram(essays1['essay'], stopwords=True, 20)
+common_words = get_top_n_bigram(essays1['essay'], stopwords=True, n=20)
 
 df4 = pd.DataFrame(common_words, columns = ['essay' , 'count'])
 df4.groupby('essay').sum()['count'].sort_values(ascending=False).iplot(
@@ -117,14 +117,14 @@ def get_top_n_trigram(corpus, stopwords=False, n=None):
     return words_freq[:n]
 
 # Generate a plotly histogram of trigrams with stopwords
-common_words = get_top_n_trigram(essays1['essay'], 20)
+common_words = get_top_n_trigram(essays1['essay'], n=20)
     
 df5 = pd.DataFrame(common_words, columns = ['essay' , 'count'])
 df5.groupby('essay').sum()['count'].sort_values(ascending=False).iplot(
     kind='bar', yTitle='Count', linecolor='black', title='Top 20 trigrams in essays before removing stop words')
 
 # Generate a plotly histogram of trigrams without stopwords
-common_words = get_top_n_trigram(essays1['essay'], stopwords=True, 20)
+common_words = get_top_n_trigram(essays1['essay'], stopwords=True, n=20)
     
 df6 = pd.DataFrame(common_words, columns = ['essay' , 'count'])
 df6.groupby('essay').sum()['count'].sort_values(ascending=False).iplot(
