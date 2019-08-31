@@ -55,7 +55,7 @@ I have two trained models one whose performance is quite bad and the other whose
 The original dataset can be obtained at this [link](https://www.kaggle.com/c/asap-aes/data) and is provided by the Hewlett Foundation in cooperation with Kaggle
 
 ### Google slides presentation
-Here you can view a google slides presentaiton that goes more in-depth of the problem at hand and the lessons I learned
+Here you can view a [google slides presentaiton](https://docs.google.com/presentation/d/10l4jyTnx1ErboKGyoiua5K5075FmBAWdWYMsMuF_Zeo/edit?usp=sharing) that goes more in-depth of the problem at hand and the lessons I learned
 
 #### Contributing
 If you'd like to lend a hand or have any suggestions to make the code more performant I'm always open to colaboration. Please either email me or make a pull request. 
