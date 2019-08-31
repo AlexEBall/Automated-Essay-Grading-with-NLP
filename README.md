@@ -1,33 +1,50 @@
 # Automated-Essay-Grading-with-NLP
 
-#### Data Description
-The file contains 28 columns:
+## Project Structure
+```
+├── README.md          <- The top-level README for developers using this project.
+├── data
+│   ├── external       <- Data from third party sources.
+│   ├── interim        <- Intermediate data that has been transformed.
+│   ├── processed      <- The final, canonical data sets for modeling.
+│   └── raw            <- The original, immutable data dump.
+│
+├── notebooks          <- Jupyter notebooks.
+|   └── RFClassifier_new_data.ipynb
+│
+├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
+│                         generated with `pip freeze > requirements.txt`
+│
+├── src                <- Source code for use in this project.
+│   ├── __init__.py    <- Makes src a Python module
+│   │
+│   ├── data           <- Scripts to download or generate data
+│   │   └── make_dataset.py
+│   │
+│   ├── features       <- Scripts to turn raw data into features for modeling
+│   │   └── build_phrase_models.py
+|   |   └── create_essay_with_topics_df_for_ml.py
+|   |   └── data_preprocessing.py
+|   |   └── grammatical_features.py
+|   |   └── topic_modeling_with_LDA.py
+│   │
+│   ├── models         <- Scripts to train models and then use trained models to make predictions
+│   │   │                 
+│   │   ├── random_forest.py
+│   │   └── random_search_random_forest_classifier.py
+|   |   └── sgd_linear_application.py
+|   |   └── svm_train_and_predict.py
+|   |
+|   ├── to-dos         <- Things I'dl like to do in the future
+│   │   └── snippets.py
+|   |
+│   └── visualization  <- Scripts to create exploratory and results oriented visualizations
+│       └── essay_EDA.py
+│       └── essay_set_1_LDA_visualiztion.py
+|       └── essay_set_1_model_visualiztion.py
+|       └── LDA_visualization_explained.md
+└── utils           
+    └── helpers.py
+```
 
-+ essay_id: A unique identifier for each individual student essay
-+ essay_set: 1-8, an id for each set of essays
-+ essay: The ascii text of a student's response
-+ rater1_domain1: Rater 1's domain 1 score; all essays have this
-+ rater2_domain1: Rater 2's domain 1 score; all essays have this
-+ rater3_domain1: Rater 3's domain 1 score; only some essays in set 8 have this.
-+ domain1_score: Resolved score between the raters; all essays have this
-+ rater1_domain2: Rater 1's domain 2 score; only essays in set 2 have this
-+ rater2_domain2: Rater 2's domain 2 score; only essays in set 2 have this
-+ domain2_score: Resolved score between the raters; only essays in set 2 have this
-+ rater1_trait1 score - rater3_trait6 score: trait scores for sets 7-8
-
-#### Anonymization in Essays
-
-We have made an effort to remove personally identifying information from the essays using the Named Entity Recognizer (NER) from the Stanford Natural Language Processing group and a variety of other approaches. The relevant entities are identified in the text and then replaced with a string such as "@PERSON1."
-
-The entitities identified by NER are: "PERSON", "ORGANIZATION", "LOCATION", "DATE", "TIME", "MONEY", "PERCENT"
-
-Other replacements made: "MONTH" (any month name not tagged as a date by the NER), "EMAIL" (anything that looks like an e-mail address), "NUM" (word containing digits or non-alphanumeric symbols), and "CAPS" (any capitalized word that doesn't begin a sentence, except in essays where more than 20% of the characters are capitalized letters), "DR" (any word following "Dr." with or without the period, with any capitalization, that doesn't fall into any of the above), "CITY" and "STATE" (various cities and states).
-
-Here are some hypothetical examples of replacements made:
-
-+ "I attend Springfield School..." --> "...I attend @ORGANIZATION1"
-+ "once my family took my on a trip to Springfield." --> "once my family took me on a trip to @LOCATION1"
-+ "John Doe is a person, and so is Jane Doe. But if I talk about Mr. Doe, I can't tell that's the same person." --> "...@PERSON1 is a person, and so is @PERSON2. But if you talk about @PERSON3, I can't tell that's the same person."
-+ "...my phone number is 555-2106" --> "...my phone number is @NUM1"
-
-Any words appearing in the prompt or source material for the corresponding essay set were white-listed and not anonymized.
+###
